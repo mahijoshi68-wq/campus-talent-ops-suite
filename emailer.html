@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bulk Emailer — CampusOps</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div class="banner">Outlook desktop in production · <strong>this page does not send email</strong> · no recipient lists in git</div>
+  <header class="top">
+    <div class="brand"><span class="mark">CampusOps</span><span class="org">Bulk Emailer</span></div>
+    <nav id="nav" class="nav"></nav>
+  </header>
+  <main class="page">
+    <p class="kicker">Campus outreach</p>
+    <h1>Personalised bulk mail without a shared inbox spreadsheet.</h1>
+    <p class="lede">The live Python/Tkinter app drives Microsoft Outlook (COM) so each candidate gets a named template — assessment invite, offer, or pre-joining checklist — with a send log on the machine. GitHub must never contain that log.</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <h2>Merge queue (sample)</h2>
+        <table id="queue"></table>
+      </div>
+      <div>
+        <h2>What the candidate would see</h2>
+        <div class="email-preview" id="preview"></div>
+        <div class="note">Limitation you can fill later: a screenshot of the Tkinter window using a three-row dummy CSV. Never commit email_log.csv.</div>
+      </div>
+    </div>
+  </main>
+  <footer>No SMTP, no Outlook connection, no real addresses.</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const rows = CAMPUSOPS.emailMerge;
+    document.getElementById("queue").innerHTML =
+      "<tr><th>Name</th><th>College</th><th>Template</th></tr>" +
+      rows.map((r) => `<tr><td>${r.name}</td><td>${r.college}</td><td>${r.status}</td></tr>`).join("");
+    const r = rows[0];
+    document.getElementById("preview").innerHTML = `
+      <div class="subj">Subject: ${r.status} — ${r.name}</div>
+      <p>Hi ${r.name.split(" ")[0]},</p>
+      <p>This is a specimen message for your ${r.college} campus process. Your slot on file is <strong>${r.slot}</strong>.</p>
+      <p>In production this would go via your Outlook profile. This demo stops here.</p>
+      <p>— Campus team, Meridian Payments (fictional)</p>
+    `;
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bulk Offer Maker — CampusOps</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div class="banner">Windows desktop app in production · <strong>no official letterhead in this repo</strong> · preview only</div>
+  <header class="top">
+    <div class="brand"><span class="mark">CampusOps</span><span class="org">Offer Maker</span></div>
+    <nav id="nav" class="nav"></nav>
+  </header>
+  <main class="page">
+    <p class="kicker">Offer operations</p>
+    <h1>One Excel row becomes a consistent letter — FTE, intern, or experience.</h1>
+    <p class="lede">The live app talks to Microsoft Word and Excel on Windows: attach a format, map screenshot ranges for CTC annexures, and generate a batch of DOCX/PDF files. Recruiters should not receive those templates. This page shows the workflow with a fictional letter.</p>
+    <div class="grid grid-2">
+      <div>
+        <h2>Letter types</h2>
+        <div id="types" class="grid" style="gap:10px"></div>
+        <div class="note">Limitation you can fill later: a 30-second screen recording of the real EXE (dummy Excel only). Do not upload stamps, letterheads, or generated offers.</div>
+      </div>
+      <div>
+        <h2>Sample letter preview</h2>
+        <div class="letter" id="letter"></div>
+      </div>
+    </div>
+  </main>
+  <footer>Not a generator. Word/Excel COM automation stays on the office laptop.</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const p = CAMPUSOPS.offerPreview;
+    document.getElementById("types").innerHTML = CAMPUSOPS.offerTypes.map((t) =>
+      `<div class="card"><h3>${t.name}</h3><p>${t.pages}</p></div>`
+    ).join("");
+    document.getElementById("letter").innerHTML = `
+      <div class="org-line">Meridian Payments · Campus offers · specimen</div>
+      <p style="margin-top:18px">Dear ${p.candidate},</p>
+      <p>We are pleased to offer you the position of <strong>${p.role}</strong>, joining on <strong>${p.doj}</strong> at ${p.location}. This specimen uses placeholders only.</p>
+      <p>College on file: ${p.college}.</p>
+      <p>${p.note}</p>
+      <p>Yours sincerely,<br>Campus Recruitment (demo)</p>
+    `;
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campus Exit Interviews — CampusOps</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div class="banner">Campus-team interviews · <strong>three fictional exits</strong> · ratings are illustrative</div>
+  <header class="top">
+    <div class="brand"><span class="mark">CampusOps</span><span class="org">Exit interviews</span></div>
+    <nav id="nav" class="nav"></nav>
+  </header>
+  <main class="page">
+    <p class="kicker">Early-tenure exits</p>
+    <h1>Hear why campus hires leave — without publishing real voices.</h1>
+    <p class="lede">These conversations sit with campus recruitment, not the reporting manager. The live tool scores leave-reason, onboarding, and role fit, then exports PDF/Excel. This page shows structure only.</p>
+    <div id="exits" class="grid grid-3"></div>
+    <div class="note">Do not paste real exit transcripts into GitHub. If you fork this repo, keep using fictional names.</div>
+  </main>
+  <footer>Comments are written for the demo. They are not actual interviews.</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    document.getElementById("exits").innerHTML = CAMPUSOPS.exits.map((e) => `
+      <div class="card">
+        <div class="meta">${e.track} · ${e.tenure}</div>
+        <h3>${e.name}</h3>
+        <p style="margin-bottom:10px">${e.college}</p>
+        <p><span class="pill warn">${e.reason}</span></p>
+        <p style="margin-top:12px">Role fit ${e.roleFit}/5 · Onboarding ${e.onboarding}/5 · Manager ${e.manager}/5</p>
+        <p style="margin-top:8px">${e.note}</p>
+      </div>
+    `).join("");
+  </script>
+</body>
+</html>

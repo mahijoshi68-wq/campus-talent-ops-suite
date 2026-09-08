@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Internship Feedback & PPO — CampusOps</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div class="banner">RM → campus dashboard → HOD · <strong>four fictional interns</strong> · no live PPO files</div>
+  <header class="top">
+    <div class="brand"><span class="mark">CampusOps</span><span class="org">Internship feedback</span></div>
+    <nav id="nav" class="nav"></nav>
+  </header>
+  <main class="page">
+    <p class="kicker">Internship cycle</p>
+    <h1>Collect RM feedback once. Drive PPO as a tracked decision.</h1>
+    <p class="lede">Reporting managers submit a scorecard via a unique link. Campus sees pending vs received. HOD only steps in when PPO is recommended. Real comments never leave the employer system — these four rows are invented.</p>
+    <div class="grid grid-4" style="margin-bottom:24px">
+      <div class="card stat"><div class="n">4</div><div class="l">Sample responses</div></div>
+      <div class="card stat"><div class="n">2</div><div class="l">PPO approved (dummy)</div></div>
+      <div class="card stat"><div class="n">1</div><div class="l">Hold — HOD pending</div></div>
+      <div class="card stat"><div class="n">1</div><div class="l">Not recommended</div></div>
+    </div>
+    <div class="card">
+      <h2>Scorecards</h2>
+      <table id="interns"></table>
+    </div>
+    <div class="note">Production flow: generate tokenised RM link → email RM → response lands on campus tab → HOD mail only if PPO is in play. This page does not send email.</div>
+  </main>
+  <footer>Names, colleges, and comments are synthetic.</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const tone = (p) => p === "Recommended" ? "ok" : p === "Hold" ? "warn" : "bad";
+    document.getElementById("interns").innerHTML =
+      "<tr><th>Intern</th><th>RM</th><th>Score</th><th>PPO</th><th>HOD</th><th>Summary</th></tr>" +
+      CAMPUSOPS.interns.map((i) =>
+        `<tr>
+          <td>${i.name}<br><span style="color:var(--muted);font-size:12px">${i.college}</span></td>
+          <td>${i.rm}</td>
+          <td>${i.score.toFixed(1)}</td>
+          <td><span class="pill ${tone(i.ppo)}">${i.ppo}</span></td>
+          <td>${i.hodStatus}</td>
+          <td>${i.summary}</td>
+        </tr>`
+      ).join("");
+  </script>
+</body>
+</html>

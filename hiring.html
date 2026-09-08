@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campus Hiring Dashboard — CampusOps</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div class="banner">Sample funnel · <strong>18,420 fake registrations</strong> · Meridian Payments FY2025</div>
+  <header class="top">
+    <div class="brand"><span class="mark">CampusOps</span><span class="org">Hiring analytics</span></div>
+    <nav id="nav" class="nav"></nav>
+  </header>
+  <main class="page">
+    <p class="kicker">Campus hiring</p>
+    <h1>Funnel, campus quality, and who actually joined.</h1>
+    <p class="lede">In production this dashboard starts empty until Excel is uploaded. Here the sample file is already loaded so you can see the story without any real MIS data.</p>
+    <div id="kpis" class="grid grid-4" style="margin-bottom:24px"></div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h2>Conversion funnel</h2>
+        <div id="funnel" class="funnel"></div>
+      </div>
+      <div class="card">
+        <h2>Dummy joiner roster</h2>
+        <table id="joiners"></table>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h2>Campus quality (sample)</h2>
+      <p style="margin-bottom:12px;color:var(--muted);font-size:14px">CQI is a 0–100 composite of selection, joining, retention, and tenure — used to compare colleges, not to rank students.</p>
+      <table id="campuses"></table>
+    </div>
+  </main>
+  <footer>Figures are invented for demonstration. They are not employer results.</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const d = window.CAMPUSOPS;
+    const k = d.kpis;
+    document.getElementById("kpis").innerHTML = [
+      ["Registrations", k.registrations.toLocaleString()],
+      ["Joined", k.joined],
+      ["Offer-to-join", k.offerToJoin + "%"],
+      ["Attrition", k.attrition + "%"],
+    ].map(([l, n]) => `<div class="card stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+    const max = d.funnel[0].value;
+    document.getElementById("funnel").innerHTML = d.funnel.map((s) => {
+      const pct = Math.round((s.value / max) * 100);
+      return `<div class="row"><span>${s.stage}</span><div class="bar"><span style="width:${pct}%"></span></div><span>${s.value.toLocaleString()}</span></div>`;
+    }).join("");
+    document.getElementById("joiners").innerHTML =
+      "<tr><th>Name</th><th>College</th><th>Track</th><th>Status</th></tr>" +
+      d.joiners.map((j) => `<tr><td>${j.name}</td><td>${j.college}</td><td>${j.track}</td><td>${j.status}</td></tr>`).join("");
+    document.getElementById("campuses").innerHTML =
+      "<tr><th>Campus</th><th>Category</th><th>Joined</th><th>Retention %</th><th>CQI</th></tr>" +
+      d.campuses.map((c) => `<tr><td>${c.name}</td><td>${c.cat}</td><td>${c.joined}</td><td>${c.retain}</td><td>${c.cqi}</td></tr>`).join("");
+  </script>
+</body>
+</html>

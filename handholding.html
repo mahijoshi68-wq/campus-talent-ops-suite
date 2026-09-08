@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Year-1 Handholding — CampusOps</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+</head>
+<body>
+  <div class="banner">12-month matrix · <strong>five fictional joiners</strong> · overdue and flagged are part of the demo</div>
+  <header class="top">
+    <div class="brand"><span class="mark">CampusOps</span><span class="org">Handholding</span></div>
+    <nav id="nav" class="nav"></nav>
+  </header>
+  <main class="page">
+    <p class="kicker">Year-1 programme</p>
+    <h1>Every promised touchpoint, on one grid.</h1>
+    <p class="lede">Campus, RM, and the joiner should not depend on a buried spreadsheet. The matrix shows what is done, scheduled, overdue, or flagged before confirmation.</p>
+    <div class="legend">
+      <span><i class="cell done"></i> Done</span>
+      <span><i class="cell scheduled"></i> Scheduled</span>
+      <span><i class="cell pending"></i> Pending</span>
+      <span><i class="cell overdue"></i> Overdue</span>
+      <span><i class="cell flagged"></i> Flagged</span>
+    </div>
+    <div class="card matrix">
+      <table id="matrix"></table>
+    </div>
+    <div class="note">Live programme also has session feedback forms and an anonymous month-11 survey. Those collect identity-free comments in production; they are omitted here so no survey answers are published.</div>
+  </main>
+  <footer>Roster is a sample file, not an employee dump.</footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const h = CAMPUSOPS.handholding;
+    const head = "<tr><th>Joiner</th><th>Track</th>" + h.touchpoints.map((t) => `<th>${t}</th>`).join("") + "</tr>";
+    const body = h.employees.map((e) =>
+      `<tr><td>${e.name}</td><td>${e.track}</td>` +
+      e.cells.map((c) => `<td><i class="cell ${c}" title="${c}"></i></td>`).join("") +
+      "</tr>"
+    ).join("");
+    document.getElementById("matrix").innerHTML = head + body;
+  </script>
+</body>
+</html>
